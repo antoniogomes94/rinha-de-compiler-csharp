@@ -1,0 +1,7 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/src/RinhaCompiler/.vs/RinhaCompiler
+/src/RinhaCompiler/RinhaCompiler/obj
+/src/RinhaCompiler/RinhaCompiler/bin/Debug/net6.0
