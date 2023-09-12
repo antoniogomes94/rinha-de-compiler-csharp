@@ -6,3 +6,5 @@
 /src/RinhaCompiler/RinhaCompiler/obj
 /src/RinhaCompiler/RinhaCompiler/bin/Debug/net6.0
 /src/RinhaCompiler/.vs/RinhaInterpreter/v17
+/src/RinhaInterpreter/.vs
+/src/RinhaInterpreter/RinhaInterpreter/bin/Debug/net6.0
