@@ -1,14 +1,12 @@
-﻿using RinhaCompiler.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RinhaCompiler.Models
+﻿namespace RinhaCompiler.Models
 {
-    public class Bool : TermBase
+    public class Bool : Term
     {
         public bool Value { get; set; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

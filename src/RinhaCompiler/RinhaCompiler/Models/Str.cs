@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RinhaCompiler.Models
+﻿namespace RinhaCompiler.Models
 {
-    public class Str : TermBase
+    public class Str : Term
     {
         public string Value { get; set; }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

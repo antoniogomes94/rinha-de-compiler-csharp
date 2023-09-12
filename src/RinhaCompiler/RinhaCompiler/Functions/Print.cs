@@ -1,15 +1,15 @@
-﻿using RinhaCompiler.Enums;
-using RinhaCompiler.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RinhaCompiler.Models;
 
 namespace RinhaCompiler.Functions
 {
-    public class Print : TermBase
+    public class Print : Term
     {
         public Term Value { get; set; }
+
+        public String PrintExecute()
+        {
+            return this.Value.ToString();
+        }
+
     }
 }
