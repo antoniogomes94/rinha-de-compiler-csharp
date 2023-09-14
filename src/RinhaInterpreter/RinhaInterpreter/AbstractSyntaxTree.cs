@@ -1,5 +1,6 @@
 ﻿using RinhaCompiler.Functions;
 using RinhaCompiler.Models;
+using RinhaInterpreter.Models;
 
 namespace RinhaCompiler
 {
@@ -52,22 +53,6 @@ namespace RinhaCompiler
                 default:
                     throw new NotSupportedException($"Unsupported node kind: {kind}");
             }
-        }
-
-        public void Interpret()
-        {
-            if (this.Expression.Kind == "Print")
-            {
-                HandlePrint((Print)this.Expression);
-            }
-            else
-                throw new NotImplementedException();
-
-        }
-
-        private static void HandlePrint(Print print)
-        {
-            Console.WriteLine(print.Value);
         }
     }
 }

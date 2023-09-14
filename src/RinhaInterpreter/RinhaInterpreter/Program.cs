@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RinhaCompiler;
+using RinhaInterpreter;
 using System.Diagnostics;
 
 string json = @"
@@ -36,7 +37,7 @@ try
 {
     dynamic arvore = JsonConvert.DeserializeObject(json);
     AbstractSyntaxTree ast = new AbstractSyntaxTree(arvore);
-    ast.Interpret();
+    Intepreter.Execute(ast.);
 
 }
 catch (Exception e)

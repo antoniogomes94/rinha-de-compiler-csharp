@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RinhaInterpreter", "..\..\..\_SANDBOX\rinha-compiler-csharp-main\RinhaCompiler\RinhaInterpreter.csproj", "{1E80B87A-21FB-4F90-B08C-B29AC4505DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RinhaInterpreter", "RinhaInterpreter\RinhaInterpreter.csproj", "{47B1A963-8F45-4A85-BB78-B21994A9F690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1E80B87A-21FB-4F90-B08C-B29AC4505DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E80B87A-21FB-4F90-B08C-B29AC4505DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E80B87A-21FB-4F90-B08C-B29AC4505DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E80B87A-21FB-4F90-B08C-B29AC4505DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B1A963-8F45-4A85-BB78-B21994A9F690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B1A963-8F45-4A85-BB78-B21994A9F690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B1A963-8F45-4A85-BB78-B21994A9F690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B1A963-8F45-4A85-BB78-B21994A9F690}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
