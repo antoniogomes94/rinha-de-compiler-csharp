@@ -45,9 +45,9 @@ string jsonSum = @"
                     ""filename"": "".\\sum.rinha""
                 }
             },
-            ""op"": ""Div"",
+            ""op"": ""Add"",
             ""rhs"": {
-                ""kind"": ""Int"",
+                ""kind"": ""Str"",
                 ""value"": 3,
                 ""location"": {
                     ""start"": 11,

@@ -27,10 +27,10 @@ namespace RinhaInterpreter
 
         private static Return EvaluateAddition(Return lhs, Return rhs)
         {
-            if (lhs.Kind != ReturnType.Int || rhs.Kind != ReturnType.Int)
-                throw new InvalidOperationException("Invalid operators");
+            if (lhs.Kind == ReturnType.Int && rhs.Kind == ReturnType.Int)
+                return new Return(ReturnType.Int, (int)lhs.Value + (int)rhs.Value);
 
-            return new Return(ReturnType.Int, (int)lhs.Value + (int)rhs.Value);
+            return new Return(ReturnType.Str, lhs.Value.ToString() + rhs.Value.ToString());
         }
 
         private static Return EvaluateSubtraction(Return lhs, Return rhs)
