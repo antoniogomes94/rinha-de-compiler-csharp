@@ -1,5 +1,5 @@
-﻿using RinhaCompiler.Functions;
-using RinhaCompiler.Models;
+﻿using RinhaInterpreter.Enums;
+using RinhaInterpreter.Functions;
 using RinhaInterpreter.Models;
 using System;
 using System.Collections.Generic;
@@ -13,21 +13,26 @@ namespace RinhaInterpreter
     {
         public static Return Execute(Term term)
         {
-            if (term.Kind == "Print")
-            {
-                return ExecutePrint((Print)term);
-            }
+           
             if (term.Kind == "Bool")
             {
-                return new Return("Bool", ((Bool)term).Value);
+                return new Return(ReturnType.Bool, ((Bool)term).Value);
             }
             if (term.Kind == "Int")
             {
-                return new Return("Int", ((Int)term).Value);
+                return new Return(ReturnType.Int, ((Int)term).Value);
             }
             if (term.Kind == "Str")
             {
-                return new Return("Srt", ((Str)term).Value);
+                return new Return(ReturnType.Str, ((Str)term).Value);
+            }
+            if ((term.Kind == "Binary"))
+            {
+                return ExecuteBinary((Binary)term);
+            }
+            if (term.Kind == "Print")
+            {
+                return ExecutePrint((Print)term);
             }
             else
                 throw new NotImplementedException();
@@ -38,6 +43,11 @@ namespace RinhaInterpreter
             var @return = Execute(print.Value);
             Console.WriteLine(@return.Value);
             return new Return();
+        }
+
+        public static Return ExecuteBinary(Binary binary)
+        {
+            return BinaryEvaluator.BinaryEval(binary);
         }
     }
 }

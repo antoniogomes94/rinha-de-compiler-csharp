@@ -1,4 +1,4 @@
-﻿namespace RinhaCompiler.Models
+﻿namespace RinhaInterpreter.Models
 {
     public class Bool : Term
     {

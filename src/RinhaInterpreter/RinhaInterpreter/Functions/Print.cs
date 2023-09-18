@@ -1,14 +1,14 @@
-﻿using RinhaCompiler.Models;
+﻿using RinhaInterpreter.Models;
 
-namespace RinhaCompiler.Functions
+namespace RinhaInterpreter.Functions
 {
     public class Print : Term
     {
         public Term Value { get; set; }
 
-        public String PrintExecute()
+        public string PrintExecute()
         {
-            return this.Value.ToString();
+            return Value.ToString();
         }
 
     }

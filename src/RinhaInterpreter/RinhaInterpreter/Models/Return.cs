@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RinhaInterpreter.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace RinhaInterpreter.Models
 {
     public  class Return
     {
-        public Return(string kind, object value)
+        public Return(ReturnType kind, object value)
         {
             Kind = kind;
             Value = value;
@@ -19,7 +20,7 @@ namespace RinhaInterpreter.Models
 
         }
 
-        public string Kind { get; set; }
+        public ReturnType Kind { get; set; }
         public object Value { get; set; }
 
 

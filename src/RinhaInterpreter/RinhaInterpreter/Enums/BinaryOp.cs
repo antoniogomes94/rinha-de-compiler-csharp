@@ -1,4 +1,4 @@
-﻿namespace RinhaCompiler.Enums;
+﻿namespace RinhaInterpreter.Enums;
 
 public enum BinaryOp
 {

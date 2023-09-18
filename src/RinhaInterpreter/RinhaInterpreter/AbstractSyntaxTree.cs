@@ -1,8 +1,7 @@
-﻿using RinhaCompiler.Functions;
-using RinhaCompiler.Models;
+﻿using RinhaInterpreter.Functions;
 using RinhaInterpreter.Models;
 
-namespace RinhaCompiler
+namespace RinhaInterpreter
 {
     public class AbstractSyntaxTree
     {
@@ -43,6 +42,8 @@ namespace RinhaCompiler
                         Value = dynamicNode.value,
                         Location = new Location(dynamicNode.location)
                     };
+                case "Binary":
+                    return new Binary(kind ,Generate(dynamicNode.lhs), dynamicNode.op.ToString(), Generate(dynamicNode.rhs), new Location(dynamicNode.location));
                 case "Print":
                     return new Print
                     {
