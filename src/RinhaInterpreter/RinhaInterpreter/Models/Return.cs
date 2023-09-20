@@ -23,6 +23,6 @@ namespace RinhaInterpreter.Models
         public ReturnType Kind { get; set; }
         public object Value { get; set; }
 
-
+        public static Return From(ReturnType kind, object value) => new() { Kind = kind, Value = value };
     }
 }

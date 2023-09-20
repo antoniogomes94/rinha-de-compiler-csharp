@@ -26,16 +26,49 @@ namespace RinhaInterpreter
             {
                 return new Return(ReturnType.Str, ((Str)term).Value);
             }
+            if (term.Kind == "Var")
+            {
+                throw new NotImplementedException();
+            }
+            if (term.Kind == "Let")
+            {
+                throw new NotImplementedException();
+            }
             if ((term.Kind == "Binary"))
             {
                 return ExecuteBinary((Binary)term);
+            }
+            if (term.Kind == "If")
+            {
+                return ExecuteIf((If)term);
             }
             if (term.Kind == "Print")
             {
                 return ExecutePrint((Print)term);
             }
+            if (term.Kind == "Call")
+            {
+                return ExecutePrint((Print)term);
+            }
+            if (term.Kind == "Function")
+            {
+                return ExecutePrint((Print)term);
+            }
             else
                 throw new NotImplementedException();
+        }
+
+        public static Return ExecuteBinary(Binary binary)
+        {
+            return BinaryEvaluator.BinaryEval(binary);
+        }
+
+        public static Return ExecuteIf(If @if)
+        {
+            var condition = Execute(@if.Condition);
+            var @bool = (bool)condition.Value;
+
+            return Execute(@bool ? @if.Then : @if.Otherwise);
         }
 
         public static Return ExecutePrint(Print print)
@@ -45,9 +78,28 @@ namespace RinhaInterpreter
             return new Return();
         }
 
-        public static Return ExecuteBinary(Binary binary)
+        public static Return ExecuteCall(Call call)
         {
-            return BinaryEvaluator.BinaryEval(binary);
+            var function = Execute(call.Callee);
+
+            var closure = (Closure)function.Value;
+
+            if (call.Arguments.Count != closure.Parameters.Count)
+                throw new Exception("Length not right");
+
+            for (int i = 0; i < closure.Parameters.Count; i++)
+            {
+                var param = closure.Parameters[i];
+                var argument = call.Arguments[i];
+                var argumentValue = Execute(argument);
+            }
+
+            return Execute(closure.Body);
+        }
+
+        public static Return ExecuteFunction(Function func)
+        {
+            return Return.From(ReturnType.Closure, new Closure() { Body = func.Value, Parameters = func.Parameters.Select(x => x.Text).ToList() });
         }
     }
 }
