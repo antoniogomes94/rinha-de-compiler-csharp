@@ -11,7 +11,7 @@ Essa é minha humildo implementação em C# (.NET 6) de um interpretador da Árv
 
 Utilize o comando abaixo para criar a imagem do docker:
 
-```docker build -t rinha-compiladores-csharp -f Dockerfile .```
+```docker build -t rinha .```
 
 Utilize o comando docker run como mostrado a seguir para criar e rodar o container. O parâmetro ```--rm``` exclui o container ao final da execução. Os AST da pasta files foram movidaos para dentro do Container de modo a facilitar os testes. Basta informar o nome do arquivo json durante a chamada.
 
