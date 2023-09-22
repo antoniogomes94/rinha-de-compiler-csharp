@@ -33,8 +33,8 @@ docker run -it --rm rinha files/combination.json
 - helloworld
 ```bash
 docker run -it --rm rinha files/helloworld.json
-
-```## Funcionalidades do Interpretador
+```
+## Funcionalidades do Interpretador
 
 - [] Call
 - [] Function
