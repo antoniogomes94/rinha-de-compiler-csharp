@@ -32,9 +32,9 @@ docker run -it --rm rinha files/sum.json
 docker run -it --rm rinha files/combination.json
 ```
 
-- helloworld
+- print
 ```bash
-docker run -it --rm rinha files/helloworld.json
+docker run -it --rm rinha files/print.json
 ```
 ## Funcionalidades do Interpretador
 
