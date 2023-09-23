@@ -86,11 +86,11 @@ namespace RinhaInterpreter
                     var parameterReturn = Execute(call.Arguments[index], memory);
 
                     if (parameterReturn.Kind == ReturnType.Bool)
-                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Bool() { Kind = "Int", Value = (bool)parameterReturn.Value });
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Bool", new Bool() { Kind = "Int", Value = (bool)parameterReturn.Value });
                     if (parameterReturn.Kind == ReturnType.Int)
-                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Int() { Kind = "Int",  Value = (int)parameterReturn.Value});
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Int", new Int() { Kind = "Int",  Value = (int)parameterReturn.Value});
                     if (parameterReturn.Kind == ReturnType.Str)
-                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Str() { Kind = "Int", Value = parameterReturn.Value.ToString()});
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Str", new Str() { Kind = "Int", Value = parameterReturn.Value.ToString()});
                 }
 
                 return Execute(closure.Body, localMemory);
