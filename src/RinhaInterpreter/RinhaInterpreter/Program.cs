@@ -12,8 +12,9 @@ string arquivo = args[0];
 
 try
 {
-    Console.WriteLine(arquivo);
-    dynamic arvore = JsonConvert.DeserializeObject(arquivo);
+    string json = File.ReadAllText(args[0]);
+    dynamic arvore = JsonConvert.DeserializeObject(json);
+
     AbstractSyntaxTree ast = new AbstractSyntaxTree(arvore);
 
     Intepreter.Execute(ast.Expression, new Dictionary<string, KeyValuePair<string, object>>());

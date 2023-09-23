@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RinhaInterpreter": {
+      "commandName": "Project",
+      "commandLineArgs": "files/hello.json"
+    }
+  }
+}
