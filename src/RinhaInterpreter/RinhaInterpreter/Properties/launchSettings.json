@@ -2,7 +2,7 @@
   "profiles": {
     "RinhaInterpreter": {
       "commandName": "Project",
-      "commandLineArgs": "files/hello.json"
+      "commandLineArgs": "files/var.json"
     }
   }
 }
