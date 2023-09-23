@@ -38,8 +38,8 @@ docker run -it --rm rinha files/print.json
 ```
 ## Funcionalidades do Interpretador
 
-- [ ] Call
-- [ ] Function
+- [x] Call
+- [x] Function
 - [x] Let
 - [x] Var
 - [x] Bool
