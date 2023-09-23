@@ -11,10 +11,10 @@ namespace RinhaInterpreter
 {
     public class BinaryEvaluator
     {
-        public static Return BinaryEval(Binary term)
+        public static Return BinaryEval(Binary term, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-            var lhs = Intepreter.Execute(term.Lhs);
-            var rhs = Intepreter.Execute(term.Rhs);
+            var lhs = Intepreter.Execute(term.Lhs, memory);
+            var rhs = Intepreter.Execute(term.Rhs, memory);
 
             return term.Op switch
             {

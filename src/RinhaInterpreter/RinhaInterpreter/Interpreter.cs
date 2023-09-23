@@ -2,16 +2,19 @@
 using RinhaInterpreter.Functions;
 using RinhaInterpreter.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace RinhaInterpreter
 {
     public class Intepreter
     {
-        public static Return Execute(Term term)
+        public static Return Execute(Term term, Dictionary<string, KeyValuePair<string, object>> memory)
         {
            
             if (term.Kind == "Bool")
@@ -28,59 +31,73 @@ namespace RinhaInterpreter
             }
             if (term.Kind == "Var")
             {
+                Var var = ((Var)term);
+
+                var _scope = memory[var.Text];
+                if (_scope.Key == "Bool")
+                    return Execute((Bool)_scope.Value, memory);
+                if (_scope.Key == "Int")
+                    return Execute((Int)_scope.Value, memory);
+                if (_scope.Key == "Str")
+                    return Execute((Str)_scope.Value, memory);
+
                 throw new NotImplementedException();
             }
             if (term.Kind == "Let")
             {
-                throw new NotImplementedException();
+                Let let = (Let)term;
+
+                memory[let.Name.Text] = new KeyValuePair<string, object>(let.Value.Kind,let.Value);
+
+                return Execute(let.Next, memory);
             }
             if ((term.Kind == "Binary"))
             {
-                return ExecuteBinary((Binary)term);
+                return ExecuteBinary((Binary)term, memory);
             }
             if (term.Kind == "If")
             {
-                return ExecuteIf((If)term);
+                return ExecuteIf((If)term, memory);
             }
             if (term.Kind == "Print")
             {
-                return ExecutePrint((Print)term);
+                return ExecutePrint((Print)term, memory);
             }
             if (term.Kind == "Call")
             {
-                return ExecutePrint((Print)term);
+                throw new NotImplementedException();
             }
             if (term.Kind == "Function")
             {
-                return ExecutePrint((Print)term);
+                throw new NotImplementedException();
             }
             else
                 throw new NotImplementedException();
         }
 
-        public static Return ExecuteBinary(Binary binary)
+        public static Return ExecuteBinary(Binary binary, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-            return BinaryEvaluator.BinaryEval(binary);
+            return BinaryEvaluator.BinaryEval(binary, memory);
         }
 
-        public static Return ExecuteIf(If @if)
+        public static Return ExecuteIf(If @if, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-            var condition = Execute(@if.Condition);
+            var condition = Execute(@if.Condition, memory);
             var @bool = (bool)condition.Value;
 
-            return Execute(@bool ? @if.Then : @if.Otherwise);
+            return Execute(@bool ? @if.Then : @if.Otherwise, memory);
         }
 
-        public static Return ExecutePrint(Print print)
+        public static Return ExecutePrint(Print print, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-            var @return = Execute(print.Value);
+            var @return = Execute(print.Value, memory);
             Console.WriteLine(@return.Value);
             return new Return();
         }
 
-        public static Return ExecuteCall(Call call)
+        public static Return ExecuteCall(Call call, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-            var function = Execute(call.Callee);
+            var function = Execute(call.Callee, memory);
 
             var closure = (Closure)function.Value;
 
@@ -91,10 +108,10 @@ namespace RinhaInterpreter
             {
                 var param = closure.Parameters[i];
                 var argument = call.Arguments[i];
-                var argumentValue = Execute(argument);
+                var argumentValue = Execute(argument, memory);
             }
 
-            return Execute(closure.Body);
+            return Execute(closure.Body, memory);
         }
 
         public static Return ExecuteFunction(Function func)
