@@ -1,0 +1,10 @@
+docker build -t rinha .
+docker run -it --rm rinha files/print.json
+docker run -it --rm rinha files/var.json
+docker run -it --rm rinha files/let.json
+docker run -it --rm rinha files/var.json
+docker run -it --rm rinha files/function.json
+docker run -it --rm rinha files/add.json
+docker run -it --rm rinha files/sum.json
+docker run -it --rm rinha files/combination.json
+docker run -it --rm rinha files/fib.json
