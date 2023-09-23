@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace RinhaInterpreter
     {
         public static Return Execute(Term term, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-           
+
             if (term.Kind == "Bool")
             {
                 return new Return(ReturnType.Bool, ((Bool)term).Value);
@@ -40,6 +41,10 @@ namespace RinhaInterpreter
                     return Execute((Int)_scope.Value, memory);
                 if (_scope.Key == "Str")
                     return Execute((Str)_scope.Value, memory);
+                if (_scope.Key == "Function")
+                    return Execute((Function)_scope.Value, memory);
+                if (_scope.Key == "Binary")
+                    return Execute((Binary)_scope.Value, memory);
 
                 throw new NotImplementedException();
             }
@@ -47,7 +52,7 @@ namespace RinhaInterpreter
             {
                 Let let = (Let)term;
 
-                memory[let.Name.Text] = new KeyValuePair<string, object>(let.Value.Kind,let.Value);
+                memory[let.Name.Text] = new KeyValuePair<string, object>(let.Value.Kind, let.Value);
 
                 return Execute(let.Next, memory);
             }
@@ -65,11 +70,41 @@ namespace RinhaInterpreter
             }
             if (term.Kind == "Call")
             {
-                throw new NotImplementedException();
+                Call call = (Call)term;
+                var functionCallee = Execute(call.Callee, memory);
+                Closure closure = (Closure)functionCallee.Value;
+                var localMemory = new Dictionary<string, KeyValuePair<string, object>>();
+
+                if (closure.Parameters.Count != call.Arguments.Count)
+                    throw new Exception($"Invalid number of parameters for function");
+
+                foreach (var a in memory)
+                    localMemory.Add(a.Key, a.Value);
+
+                for (var index = 0; index < closure.Parameters.Count; index++)
+                {
+                    var parameterReturn = Execute(call.Arguments[index], memory);
+
+                    if (parameterReturn.Kind == ReturnType.Bool)
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Bool() { Kind = "Int", Value = (bool)parameterReturn.Value });
+                    if (parameterReturn.Kind == ReturnType.Int)
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Int() { Kind = "Int",  Value = (int)parameterReturn.Value});
+                    if (parameterReturn.Kind == ReturnType.Str)
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>(call.Arguments[index].Kind, new Str() { Kind = "Int", Value = parameterReturn.Value.ToString()});
+                }
+
+                return Execute(closure.Body, localMemory);
             }
             if (term.Kind == "Function")
             {
-                throw new NotImplementedException();
+                Function function = (Function)term;
+                //for (int i = 0; i < function.Parameters.Count; i++)
+                //{
+                //    memory[function.Parameters[i].Text] = new KeyValuePair<string, object>(function.Parameters[i].Text, null);
+                //}
+
+                //return Execute(function.Value, memory);
+                return new Return(ReturnType.Closure, new Closure() { Body = function.Value, Memory = memory, Parameters = function.Parameters.Select(x => x.Text).ToList() });
             }
             else
                 throw new NotImplementedException();
@@ -93,30 +128,6 @@ namespace RinhaInterpreter
             var @return = Execute(print.Value, memory);
             Console.WriteLine(@return.Value);
             return new Return();
-        }
-
-        public static Return ExecuteCall(Call call, Dictionary<string, KeyValuePair<string, object>> memory)
-        {
-            var function = Execute(call.Callee, memory);
-
-            var closure = (Closure)function.Value;
-
-            if (call.Arguments.Count != closure.Parameters.Count)
-                throw new Exception("Length not right");
-
-            for (int i = 0; i < closure.Parameters.Count; i++)
-            {
-                var param = closure.Parameters[i];
-                var argument = call.Arguments[i];
-                var argumentValue = Execute(argument, memory);
-            }
-
-            return Execute(closure.Body, memory);
-        }
-
-        public static Return ExecuteFunction(Function func)
-        {
-            return Return.From(ReturnType.Closure, new Closure() { Body = func.Value, Parameters = func.Parameters.Select(x => x.Text).ToList() });
         }
     }
 }
