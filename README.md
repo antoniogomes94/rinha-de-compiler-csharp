@@ -40,8 +40,8 @@ docker run -it --rm rinha files/helloworld.json
 
 - [ ] Call
 - [ ] Function
-- [ ] Let
-- [ ] Var
+- [x] Let
+- [x] Var
 - [x] Bool
 - [x] Int
 - [x] Str
