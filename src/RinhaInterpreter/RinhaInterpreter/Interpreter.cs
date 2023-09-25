@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
+using Tuple = RinhaInterpreter.Models.Tuple;
 
 namespace RinhaInterpreter
 {
@@ -17,7 +18,6 @@ namespace RinhaInterpreter
     {
         public static Return Execute(Term term, Dictionary<string, KeyValuePair<string, object>> memory)
         {
-
             if (term.Kind == "Bool")
             {
                 return new Return(ReturnType.Bool, ((Bool)term).Value);
@@ -30,6 +30,18 @@ namespace RinhaInterpreter
             {
                 return new Return(ReturnType.Str, ((Str)term).Value);
             }
+            if (term.Kind == "Tuple")
+            {
+                return new Return(ReturnType.Tuple, ((Tuple)term));
+            }
+            if (term.Kind == "Let")
+            {
+                Let let = (Let)term;
+
+                memory[let.Name.Text] = new KeyValuePair<string, object>(let.Value.Kind, let.Value);
+
+                return Execute(let.Next, memory);
+            }
             if (term.Kind == "Var")
             {
                 Var var = ((Var)term);
@@ -41,20 +53,14 @@ namespace RinhaInterpreter
                     return Execute((Int)_scope.Value, memory);
                 if (_scope.Key == "Str")
                     return Execute((Str)_scope.Value, memory);
+                if (_scope.Key == "Tuple")
+                    return Execute((Tuple)_scope.Value, memory);
                 if (_scope.Key == "Function")
                     return Execute((Function)_scope.Value, memory);
                 if (_scope.Key == "Binary")
                     return Execute((Binary)_scope.Value, memory);
 
                 throw new NotImplementedException();
-            }
-            if (term.Kind == "Let")
-            {
-                Let let = (Let)term;
-
-                memory[let.Name.Text] = new KeyValuePair<string, object>(let.Value.Kind, let.Value);
-
-                return Execute(let.Next, memory);
             }
             if ((term.Kind == "Binary"))
             {
@@ -67,6 +73,73 @@ namespace RinhaInterpreter
             if (term.Kind == "Print")
             {
                 return ExecutePrint((Print)term, memory);
+            }
+            if (term.Kind == "First")
+            {
+                First first = ((First)term);
+                Return retorno = null;
+
+                if (first.Value.Kind == "Var")
+                    retorno = Execute((Var)first.Value, memory);
+                else if (first.Value.Kind == "Tuple")
+                    retorno = Execute((Tuple)first.Value, memory);
+                else if (first.Value.Kind == "First")
+                    return Execute((First)first.Value, memory);
+                else if (first.Value.Kind == "Second")
+                    return Execute((Second)first.Value, memory);
+                else
+                    throw new NotImplementedException();
+
+                Tuple tuple = (Tuple)retorno.Value;
+
+                if (tuple.First.Kind == "Bool")
+                    return Execute((Bool)tuple.First, memory);
+                if (tuple.First.Kind == "Int")
+                    return Execute((Int)tuple.First, memory);
+                if (tuple.First.Kind == "Str")
+                    return Execute((Str)tuple.First, memory);
+                if (tuple.First.Kind == "Tuple")
+                    return Execute((Tuple)tuple.First, memory);
+                if (tuple.First.Kind == "Function")
+                    return Execute((Function)tuple.First, memory);
+                if (tuple.First.Kind == "Binary")
+                    return Execute((Binary)tuple.First, memory);
+
+                throw new NotImplementedException();
+            }
+            if (term.Kind == "Second")
+            {
+                Second second = ((Second)term);
+                Return retorno = null;
+
+                if (second.Value.Kind == "Var")
+                    retorno = Execute((Var)second.Value, memory);
+                else if (second.Value.Kind == "Tuple")
+                    retorno = Execute((Tuple)second.Value, memory);
+                else if (second.Value.Kind == "First")
+                    return Execute((First)second.Value, memory);
+                else if (second.Value.Kind == "Second")
+                    return Execute((Second)second.Value, memory);
+                else
+                    throw new NotImplementedException();
+
+                Tuple tuple = (Tuple)retorno.Value;
+
+                if (tuple.Second.Kind == "Bool")
+                    return Execute((Bool)tuple.Second, memory);
+                if (tuple.Second.Kind == "Int")
+                    return Execute((Int)tuple.Second, memory);
+                if (tuple.Second.Kind == "Str")
+                    return Execute((Str)tuple.Second, memory);
+                if (tuple.Second.Kind == "Tuple")
+                    return Execute((Tuple)tuple.Second, memory);
+                if (tuple.Second.Kind == "Function")
+                    return Execute((Function)tuple.Second, memory);
+                if (tuple.Second.Kind == "Binary")
+                    return Execute((Binary)tuple.Second, memory);
+
+                throw new NotImplementedException();
+
             }
             if (term.Kind == "Call")
             {
@@ -88,9 +161,9 @@ namespace RinhaInterpreter
                     if (parameterReturn.Kind == ReturnType.Bool)
                         localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Bool", new Bool() { Kind = "Int", Value = (bool)parameterReturn.Value });
                     if (parameterReturn.Kind == ReturnType.Int)
-                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Int", new Int() { Kind = "Int",  Value = (int)parameterReturn.Value});
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Int", new Int() { Kind = "Int", Value = (int)parameterReturn.Value });
                     if (parameterReturn.Kind == ReturnType.Str)
-                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Str", new Str() { Kind = "Int", Value = parameterReturn.Value.ToString()});
+                        localMemory[closure.Parameters[index]] = new KeyValuePair<string, object>("Str", new Str() { Kind = "Int", Value = parameterReturn.Value.ToString() });
                 }
 
                 return Execute(closure.Body, localMemory);
@@ -98,12 +171,6 @@ namespace RinhaInterpreter
             if (term.Kind == "Function")
             {
                 Function function = (Function)term;
-                //for (int i = 0; i < function.Parameters.Count; i++)
-                //{
-                //    memory[function.Parameters[i].Text] = new KeyValuePair<string, object>(function.Parameters[i].Text, null);
-                //}
-
-                //return Execute(function.Value, memory);
                 return new Return(ReturnType.Closure, new Closure() { Body = function.Value, Memory = memory, Parameters = function.Parameters.Select(x => x.Text).ToList() });
             }
             else

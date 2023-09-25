@@ -2,6 +2,7 @@
 using RinhaInterpreter.Models;
 using System.Reflection.Metadata;
 using Parameter = RinhaInterpreter.Models.Parameter;
+using Tuple = RinhaInterpreter.Models.Tuple;
 
 namespace RinhaInterpreter
 {
@@ -44,11 +45,12 @@ namespace RinhaInterpreter
                         Value = dynamicNode.value,
                         Location = new Location(dynamicNode.location)
                     };
-                case "Var":
-                    return new Var
+                case "Tuple":
+                    return new Tuple
                     {
                         Kind = kind,
-                        Text = dynamicNode.text,
+                        First = Generate(dynamicNode.first),
+                        Second = Generate(dynamicNode.second),
                         Location = new Location(dynamicNode.location)
                     };
                 case "Let":
@@ -64,6 +66,13 @@ namespace RinhaInterpreter
                         Next = Generate(dynamicNode.next),
                         Location = new Location(dynamicNode.location)
                     };
+                case "Var":
+                    return new Var
+                    {
+                        Kind = kind,
+                        Text = dynamicNode.text,
+                        Location = new Location(dynamicNode.location)
+                    };
                 case "Binary":
                     return new Binary(kind ,Generate(dynamicNode.lhs), dynamicNode.op.ToString(), Generate(dynamicNode.rhs), new Location(dynamicNode.location));
                 case "If":
@@ -77,6 +86,20 @@ namespace RinhaInterpreter
                     };
                 case "Print":
                     return new Print
+                    {
+                        Kind = kind,
+                        Value = Generate(dynamicNode.value),
+                        Location = new Location(dynamicNode.location)
+                    };
+                case "First":
+                    return new First
+                    {
+                        Kind = kind,
+                        Value = Generate(dynamicNode.value),
+                        Location = new Location(dynamicNode.location)
+                    };
+                case "Second":
+                    return new Second
                     {
                         Kind = kind,
                         Value = Generate(dynamicNode.value),

@@ -11,6 +11,7 @@ namespace RinhaInterpreter.Enums
         Void,
         Int,
         Str,
+        Tuple,
         Closure,
         Bool
     }

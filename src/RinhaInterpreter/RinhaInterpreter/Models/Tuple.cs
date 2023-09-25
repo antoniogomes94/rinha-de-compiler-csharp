@@ -8,7 +8,7 @@ namespace RinhaInterpreter.Models
 {
     public class Tuple : Term
     {
-        public Tuple First { get; set; }
-        public Tuple Second { get; set; }
+        public Term First { get; set; }
+        public Term Second { get; set; }
     }
 }
