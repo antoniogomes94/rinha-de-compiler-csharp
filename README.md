@@ -1,11 +1,10 @@
 # Interpretador para a Rinha de Compiladores
 
-Compiladores e interpretadores é um tempo que eu nunca tinha me aprofundado, tem sido muito legal a busca por esses conhecimentos.
+Compiladores e interpretadores é um assunto que eu nunca tinha me aprofundado, tem sido muito legal a busca por esses conhecimentos.
 
 Espero no mínimo1 conseguir fazer o pior compilador (ou intepretador kk) do mundo.
 
 Essa é minha humildo implementação em C# (.NET 6) de um interpretador da Árvore Sintática Abstrata (AST) da linguagem [Rinha de Compiladores](https://github.com/aripiprazole/rinha-de-compiler/).
-
 
 ## Como usar
 
