@@ -15,6 +15,9 @@
     <None Update="files\add.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="files\ast.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="files\combination.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

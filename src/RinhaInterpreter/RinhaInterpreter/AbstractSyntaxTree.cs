@@ -1,6 +1,5 @@
-﻿using RinhaInterpreter.Functions;
-using RinhaInterpreter.Models;
-using System.Reflection.Metadata;
+﻿using RinhaInterpreter.Models;
+using RinhaInterpreter.Models.Functions;
 using Parameter = RinhaInterpreter.Models.Parameter;
 using Tuple = RinhaInterpreter.Models.Tuple;
 

@@ -1,6 +1,6 @@
 ﻿using RinhaInterpreter.Models;
 
-namespace RinhaInterpreter.Functions
+namespace RinhaInterpreter.Models.Functions
 {
     public class Print : Term
     {

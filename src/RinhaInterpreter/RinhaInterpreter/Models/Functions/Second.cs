@@ -1,4 +1,4 @@
-﻿namespace RinhaInterpreter.Models
+﻿namespace RinhaInterpreter.Models.Functions
 {
     public class Second : Term
     {
