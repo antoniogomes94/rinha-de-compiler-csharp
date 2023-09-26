@@ -24,4 +24,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build ./src/files ./files
-ENTRYPOINT ["dotnet", "RinhaInterpreter.dll"]
+CMD ["dotnet", "RinhaInterpreter.dll", "/var/rinha/source.rinha.json"]

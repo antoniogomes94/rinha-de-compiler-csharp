@@ -9,7 +9,7 @@ Stopwatch stopwatch = new Stopwatch();
 stopwatch.Start();
 
 string arquivo = args[0];
-
+Console.WriteLine(arquivo);
 try
 {
     string json = File.ReadAllText(args[0]);
@@ -32,4 +32,3 @@ catch (Exception e)
 stopwatch.Stop();
 
 Console.WriteLine("Interpreter Exec. Time: {0} ms", stopwatch.ElapsedMilliseconds);
-//Console.WriteLine(args[0]);
