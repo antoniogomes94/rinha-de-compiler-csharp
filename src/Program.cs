@@ -5,11 +5,12 @@ using System.Diagnostics;
 Stopwatch stopwatch = new Stopwatch();
 stopwatch.Start();
 
-string arquivo = args.Length > 0 ? args[0] : "/var/rinha/source.rinha.json"; ;
+string arquivo = args.Length > 0 ? args[0] : "var/rinha/source.rinha.json"; ;
 Console.WriteLine(arquivo);
 try
 {
-    string json = File.ReadAllText(args[0]);
+    string json = File.ReadAllText(arquivo);
+    //Console.WriteLine(json);
     dynamic arvore = JsonConvert.DeserializeObject(json);
 
     AbstractSyntaxTree ast = new AbstractSyntaxTree(arvore);
