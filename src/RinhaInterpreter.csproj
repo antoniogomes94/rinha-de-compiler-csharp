@@ -12,37 +12,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="files\add.json">
+    <None Update="var\rinha\add.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\ast.json">
+    <None Update="var\rinha\ast.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\combination.json">
+    <None Update="var\rinha\combination.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\fib.json">
+    <None Update="var\rinha\fib.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\function.json">
+    <None Update="var\rinha\function.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="files\hello.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\if.json">
+    <None Update="var\rinha\if.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\let.json">
+    <None Update="var\rinha\let.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\print.json">
+    <None Update="var\rinha\print.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="files\sum.json">
+    <None Update="var\rinha\sum.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-	  <None Update="files\var.json">
+	  <None Update="var\rinha\var.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
   </ItemGroup>

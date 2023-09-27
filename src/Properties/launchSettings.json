@@ -2,7 +2,7 @@
   "profiles": {
     "RinhaInterpreter": {
       "commandName": "Project",
-      "commandLineArgs": "files/ast.json"
+      "commandLineArgs": "var/rinha/ast.json"
     }
   }
 }
