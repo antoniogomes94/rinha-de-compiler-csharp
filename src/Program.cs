@@ -2,13 +2,10 @@
 using RinhaInterpreter;
 using System.Diagnostics;
 
-if (args.Length == 0)
-    throw new FileNotFoundException("Erro ao encontrar o arquivo da ast!");
-
 Stopwatch stopwatch = new Stopwatch();
 stopwatch.Start();
 
-string arquivo = args[0];
+string arquivo = args.Length > 0 ? args[0] : "/var/rinha/source.rinha.json"; ;
 Console.WriteLine(arquivo);
 try
 {

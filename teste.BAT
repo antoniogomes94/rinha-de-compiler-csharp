@@ -1,4 +1,3 @@
-docker build -t rinha .
 docker run -it --rm rinha files/print.json
 docker run -it --rm rinha files/var.json
 docker run -it --rm rinha files/let.json

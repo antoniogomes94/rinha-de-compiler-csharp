@@ -1,27 +1,17 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /App
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
+# Copy everything
+COPY ./src ./
 
-COPY ["src/RinhaInterpreter/RinhaInterpreter/RinhaInterpreter.csproj", "./"]
+# Restore as distinct layers
+RUN dotnet restore
 
-RUN dotnet restore "RinhaInterpreter.csproj"
+# Build and publish a release
+RUN dotnet publish -c Release -o out
 
-COPY ./src/ ./
-
-COPY ./files/ ./files/
-
-WORKDIR "/src/"
-
-RUN dotnet build "RinhaInterpreter/RinhaInterpreter/RinhaInterpreter.csproj" -c Release -o /app/build
-
-
-FROM build AS publish
-RUN dotnet publish "RinhaInterpreter/RinhaInterpreter/RinhaInterpreter.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-COPY --from=build ./src/files ./files
-CMD ["dotnet", "RinhaInterpreter.dll", "/var/rinha/source.rinha.json"]
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/runtime:6.0-alpine
+WORKDIR /App
+COPY --from=build-env /App/out .
+ENTRYPOINT ["dotnet", "RinhaInterpreter.dll"]
