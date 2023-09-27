@@ -48,6 +48,6 @@ docker run -it --rm rinha var/rinha/print.json
 - [x] Binary
 - [x] If
 - [x] Print
-- [ ] Tuple
-- [ ] First
-- [ ] Second
+- [x] Tuple
+- [x] First
+- [x] Second
