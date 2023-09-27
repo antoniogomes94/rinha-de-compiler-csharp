@@ -18,23 +18,24 @@ Utilize o comando docker run como mostrado a seguir para criar e rodar o contain
 
 - fib
 ```bash
-docker run -it --rm rinha files/fib.json
+docker run -it --rm rinha var/rinha/fib.json
 ```
 
 - sum
 ```bash
-docker run -it --rm rinha files/sum.json
+docker run -it --rm rinha var/rinha/sum.json
 ```
 
 - combination
 ```bash
-docker run -it --rm rinha files/combination.json
+docker run -it --rm rinha var/rinha/combination.json
 ```
 
 - print
 ```bash
-docker run -it --rm rinha files/print.json
+docker run -it --rm rinha var/rinha/print.json
 ```
+
 ## Funcionalidades do Interpretador
 
 - [x] Call
