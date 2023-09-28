@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RinhaInterpreter;
 using System.Diagnostics;
 
@@ -11,7 +12,9 @@ try
 {
     string json = File.ReadAllText(arquivo);
     //Console.WriteLine(json);
-    dynamic arvore = JsonConvert.DeserializeObject(json);
+    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All, MaxDepth = 256 };
+
+    dynamic arvore = JsonConvert.DeserializeObject<JObject>(json, settings);
 
     AbstractSyntaxTree ast = new AbstractSyntaxTree(arvore);
 
